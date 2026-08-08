@@ -81,4 +81,4 @@ class CarWashStation:
                     f"""Samochód {car.brand} jest zbyt duży
                     aby go umyć w tej cenie"""
                 )
-            return sum(price_all_car)
+        return sum(price_all_car)
