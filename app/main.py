@@ -63,11 +63,11 @@ class CarWashStation:
         self.average_rating = round(average_rating, 1)
         self.count_of_ratings = count_of_ratings
 
-    def serve_cars(self, car: list[Car]) -> float:
+    def serve_cars(self, cars: list[Car]) -> float:
         """Myjnia samochodowa"""
 
         price_all_car = []
-        for car in Car:
+        for car in cars:
             if car.clean_mark < self.clean_power:
                 print(f"Samochód {car.brand} jest myty")
                 price_one_car = round(car.comfort_class
