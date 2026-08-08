@@ -15,6 +15,9 @@ class Car:
                 "Klasa komfortu i stopień czystości musi być cyfrą"
             )
 
+        if not isinstance(brand, str):
+            raise TypeError("Marka samochodu musi być tekstem")
+
         if not (1 <= comfort_class <= 7):
             raise ValueError("Podaj zakres od 1 do 7")
 
