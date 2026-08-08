@@ -62,3 +62,23 @@ class CarWashStation:
         self.clean_power = clean_power
         self.average_rating = round(average_rating, 1)
         self.count_of_ratings = count_of_ratings
+
+    def serve_cars(self, car: list[Car]) -> float:
+        """Myjnia samochodowa"""
+
+        price_all_car = []
+        for car in Car:
+            if car.clean_mark < self.clean_power:
+                print(f"Samochód {car.brand} jest myty")
+                price_one_car = round(car.comfort_class
+                                      * (self.clean_power - car.clean_mark)
+                                      * self.average_rating
+                                      / self.distance_from_city_center, 1)
+                price_all_car.append(price_one_car)
+            else:
+                print
+                (
+                    f"""Samochód {car.brand} jest zbyt duży
+                    aby go umyć w tej cenie"""
+                )
+            return sum(price_all_car)
