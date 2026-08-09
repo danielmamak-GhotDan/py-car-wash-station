@@ -75,12 +75,10 @@ class CarWashStation:
                                       * self.average_rating
                                       / self.distance_from_city_center, 1)
                 price_all_car.append(price_one_car)
+                car.clean_mark = self.clean_power
             else:
-                print
-                (
-                    f"""Samochód {car.brand} jest zbyt duży
+                return f"""Samochód {car.brand} jest zbyt duży
                     aby go umyć w tej cenie"""
-                )
         return sum(price_all_car)
 
     def calculate_washing_price(self, car: Car) -> float:
@@ -92,6 +90,8 @@ class CarWashStation:
                      / self.distance_from_city_center, 1)
 
     def wash_single_car(self, car: str) -> None:
+        """Sprawdza pojazd i dopuszcza do mycia"""
+
         if self.clean_power > car.clean_mark:
             print(f"Mycie samochodu {car.brand}")
             car.clean_mark = self.clean_power
@@ -102,22 +102,42 @@ class CarWashStation:
             ma za duży 'clean mark' nie może być umyty
             """
 
+    def rate_service(self, rate: int) -> None:
+        """Ocena myjni"""
 
-bmw = Car(comfort_class=3, clean_mark=9, brand="BMW")
-audi = Car(comfort_class=4, clean_mark=9, brand="Audi")
+        try:
+            rate = int(rate)
+        except (TypeError, ValueError):
+            raise ValueError("Ocene podaj w liczbach")
+
+        self.rate = rate
+
+        if not (1 <= self.rate <= 5):
+            raise ValueError("Oceń w zakresie 1-5")
+
+        average_rating = ((
+            self.average_rating * self.count_of_ratings)
+            + rate) / (self.count_of_ratings + 1)
+        count_of_ratings = self.count_of_ratings + 1
+        return count_of_ratings, round(average_rating, 1)
+
+
+bmw = Car(comfort_class=3, clean_mark=2, brand="BMW")
+audi = Car(comfort_class=4, clean_mark=6, brand="Audi")
 
 wash_station = CarWashStation(
     distance_from_city_center=5,
     clean_power=6,
-    average_rating=3.5,
-    count_of_ratings=6
+    average_rating=3.9,
+    count_of_ratings=11
 )
 
-# income = wash_station.serve_cars([bmw, audi])
-# print(bmw.clean_mark)
-# print(audi.clean_mark)
+income = wash_station.serve_cars([bmw, audi])
+print(income)
+print(f"{bmw.brand} {bmw.clean_mark}")
+print(f"{audi.brand} {audi.clean_mark}")
 # price_car = wash_station.calculate_washing_price(audi)
 # print(price_car)
 
-wash_car = wash_station.wash_single_car(bmw)
-print(wash_car)
+# wash_car = wash_station.rate_service(3)
+# print(wash_car)
