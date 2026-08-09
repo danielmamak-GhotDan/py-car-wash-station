@@ -91,8 +91,19 @@ class CarWashStation:
                      * self.average_rating
                      / self.distance_from_city_center, 1)
 
+    def wash_single_car(self, car: str) -> None:
+        if self.clean_power > car.clean_mark:
+            print(f"Mycie samochodu {car.brand}")
+            car.clean_mark = self.clean_power
+            return car.clean_mark
+        else:
+            return f"""
+                     Samochód {car.brand}
+            ma za duży 'clean mark' nie może być umyty
+            """
 
-bmw = Car(comfort_class=3, clean_mark=3, brand="BMW")
+
+bmw = Car(comfort_class=3, clean_mark=9, brand="BMW")
 audi = Car(comfort_class=4, clean_mark=9, brand="Audi")
 
 wash_station = CarWashStation(
@@ -102,8 +113,11 @@ wash_station = CarWashStation(
     count_of_ratings=6
 )
 
-income = wash_station.serve_cars([bmw, audi])
-print(bmw.clean_mark)
-print(audi.clean_mark)
-price_car = wash_station.calculate_washing_price(audi)
-print(price_car)
+# income = wash_station.serve_cars([bmw, audi])
+# print(bmw.clean_mark)
+# print(audi.clean_mark)
+# price_car = wash_station.calculate_washing_price(audi)
+# print(price_car)
+
+wash_car = wash_station.wash_single_car(bmw)
+print(wash_car)
